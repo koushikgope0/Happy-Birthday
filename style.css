@@ -5,7 +5,6 @@ body {
     background: linear-gradient(135deg, #ffdde1, #ee9ca7);
     color: #4b2c2c;
     overflow-x: hidden;
-    overflow-y: scroll;
     min-height: 200vh;
 }
 
@@ -14,12 +13,9 @@ body {
     position: relative;
     width: 100%;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-/* 3D Heart Canvas (Previously Cake) */
+/* 3D Heart Canvas */
 #love-canvas {
     position: fixed;
     top: 0;
@@ -27,7 +23,8 @@ body {
     width: 100%;
     height: 100vh;
     cursor: pointer;
-    transition: all 1.5s ease-in-out;
+    transition: transform 1.5s ease-in-out;
+    z-index: 1; /* Important */
 }
 
 /* Click Instruction */
@@ -62,13 +59,13 @@ body {
     z-index: 100;
 }
 
-/* Soft Pulse Animation */
+/* Pulse Animation (FIXED transform conflict) */
 @keyframes pulse {
     0% {
         transform: translateX(-50%) scale(1);
     }
     50% {
-        transform: translateX(-50%) scale(1.05);
+        transform: translateX(-50%) scale(1.08);
     }
     100% {
         transform: translateX(-50%) scale(1);
@@ -81,15 +78,15 @@ body {
     width: 40%;
     right: -100%;
     top: 50%;
-    transform: translateY(-50%) rotate(-2deg);
+    transform: translateY(-50%);
     background: #fffaf5;
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    transition: all 1s ease-in-out;
+    transition: right 1s ease-in-out;
     max-height: 70vh;
     overflow-y: auto;
-    z-index: 50;
+    z-index: 10; /* Above canvas */
     border: 2px solid #f8c8dc;
 }
 
@@ -108,8 +105,7 @@ body {
     text-align: justify;
 }
 
-/* Spacer */
+/* Spacer (IMPORTANT: more scroll space) */
 #spacer {
-    height: 100vh;
+    height: 200vh;
 }
-
