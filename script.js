@@ -21,7 +21,7 @@ function initLove() {
     });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById("cake-canvas").appendChild(renderer.domElement);
+    document.getElementById("love-canvas").appendChild(renderer.domElement);
 
     // Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
@@ -115,14 +115,14 @@ window.addEventListener("scroll", function () {
     const scrollPosition = window.scrollY || document.documentElement.scrollTop;
 
     if (scrollPosition > 100) {
-        document.getElementById("cake-canvas").style.transform =
+        document.getElementById("love-canvas").style.transform =
             "translate(-40%, 0) scale(0.5)";
         document.getElementById("letter").style.right = "10%";
 
         const scrollText = document.getElementById("scroll-instruction");
         if (scrollText) scrollText.style.display = "none";
     } else {
-        document.getElementById("cake-canvas").style.transform =
+        document.getElementById("love-canvas").style.transform =
             "translate(0, 0) scale(1)";
         document.getElementById("letter").style.right = "-100%";
     }
@@ -132,3 +132,4 @@ window.addEventListener("scroll", function () {
 window.onload = function () {
     initLove();
 };
+
