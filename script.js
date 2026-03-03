@@ -3,6 +3,13 @@ let heartClicked = false;
 let scrollEnabled = false;
 
 function initLove() {
+
+    const container = document.getElementById("love-canvas");
+    if (!container) {
+        console.error("love-canvas div not found!");
+        return;
+    }
+
     // Scene
     scene = new THREE.Scene();
 
@@ -21,7 +28,7 @@ function initLove() {
     });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById("love-canvas").appendChild(renderer.domElement);
+    container.appendChild(renderer.domElement);
 
     // Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
@@ -31,7 +38,7 @@ function initLove() {
     directionalLight.position.set(10, 10, 10);
     scene.add(directionalLight);
 
-    // Create Heart Shape
+    // Heart Shape
     const heartShape = new THREE.Shape();
     heartShape.moveTo(0, 0);
     heartShape.bezierCurveTo(0, 3, -5, 3, -5, 0);
@@ -60,13 +67,15 @@ function initLove() {
 
     camera.position.z = 20;
 
-    animate();
-
     renderer.domElement.addEventListener("click", handleHeartClick);
+
+    animate();
 }
 
 function animate() {
     requestAnimationFrame(animate);
+
+    if (!heart) return;
 
     if (!heartClicked) {
         heart.rotation.y += 0.01;
@@ -82,7 +91,6 @@ function handleHeartClick() {
     if (!heartClicked) {
         heartClicked = true;
 
-        // Hide instructions if any
         const instruction = document.getElementById("instructions");
         if (instruction) instruction.style.display = "none";
 
@@ -104,7 +112,7 @@ window.addEventListener("resize", () => {
     }
 });
 
-// Scroll Animation
+// Scroll
 window.addEventListener("scroll", function () {
 
     if (!scrollEnabled) {
@@ -114,22 +122,22 @@ window.addEventListener("scroll", function () {
 
     const scrollPosition = window.scrollY || document.documentElement.scrollTop;
 
+    const canvas = document.getElementById("love-canvas");
+    const letter = document.getElementById("letter");
+
+    if (!canvas || !letter) return;
+
     if (scrollPosition > 100) {
-        document.getElementById("love-canvas").style.transform =
-            "translate(-40%, 0) scale(0.5)";
-        document.getElementById("letter").style.right = "10%";
+        canvas.style.transform = "translate(-40%, 0) scale(0.5)";
+        letter.style.right = "10%";
 
         const scrollText = document.getElementById("scroll-instruction");
         if (scrollText) scrollText.style.display = "none";
     } else {
-        document.getElementById("love-canvas").style.transform =
-            "translate(0, 0) scale(1)";
-        document.getElementById("letter").style.right = "-100%";
+        canvas.style.transform = "translate(0, 0) scale(1)";
+        letter.style.right = "-100%";
     }
 });
 
-// Initialize
-window.onload = function () {
-    initLove();
-};
-
+// Initialize safely
+window.addEventListener("load", initLove);
